@@ -1,0 +1,5 @@
+{
+  "name": "Lumina Write AI",
+  "description": "A security-first AI writing assistant for multilingual grammar correction, paraphrasing, and style enhancement using Gemini 3.",
+  "requestFramePermissions": []
+}

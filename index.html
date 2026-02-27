@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GrammarScan AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --accent: #00f5b4;
+        --bg: #090e16;
+        --surface: #111827;
+      }
+      body { 
+        font-family: 'Inter', sans-serif; 
+        background-color: var(--bg);
+        color: white;
+      }
+      .glass { 
+        background: rgba(17, 24, 39, 0.7); 
+        backdrop-filter: blur(20px); 
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1f2937;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #374151;
+      }
+      .accent-glow {
+        box-shadow: 0 0 20px rgba(0, 245, 180, 0.15);
+      }
+      .squiggly-underline {
+        text-decoration: none;
+        position: relative;
+      }
+      .squiggly-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="3" viewBox="0 0 40 3"><path d="M1 2C5.5 0.5 10 2 14.5 2C19 2 23.5 0.5 28 0.5C32.5 0.5 37 2 41.5 2" stroke="%23EF4444" stroke-width="1.5" stroke-linecap="round"/></svg>') repeat-x;
+        background-size: 10px 3px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="selection:bg-[#00f5b4]/30">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
