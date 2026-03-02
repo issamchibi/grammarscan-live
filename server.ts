@@ -1,6 +1,6 @@
 import express from "express";
 import { createServer as createViteServer } from "vite";
-import { secureAnalyzeHandler } from "./api/handler";
+import { secureAnalyzeHandler } from "./api/handler.ts";
 
 async function startServer() {
   const app = express();
