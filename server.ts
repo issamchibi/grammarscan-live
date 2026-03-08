@@ -1,18 +1,23 @@
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import { secureAnalyzeHandler } from "./api/handler.ts";
 
-async function startServer() {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json());
 
-  // API analyze
+  // =========================
+  // API ROUTES
+  // =========================
+
   app.post("/api/analyze", async (req, res) => {
     try {
-
       const ip =
         req.headers["x-forwarded-for"] ||
         req.socket.remoteAddress ||
@@ -26,65 +31,65 @@ async function startServer() {
       );
 
       res.json(result);
-
     } catch (error: any) {
-
-      console.error(error);
+      console.error("Analyze error:", error);
 
       res.status(500).json({
-        error: error.message || "Internal Server Error"
+        error: error.message || "Internal Server Error",
       });
-
     }
   });
 
-  // signup route
   app.post("/api/signup", async (req, res) => {
-
     try {
-
       const { email } = req.body;
 
-      if (!email)
+      if (!email) {
         return res.status(400).json({ error: "Email required" });
+      }
 
       const response = await fetch(
         "https://rough-wildflower-615f.issamchibi123.workers.dev/signup",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email }),
         }
       );
 
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error("Worker signup failed");
+      }
 
       res.json({ success: true });
-
     } catch (error: any) {
-
-      console.error(error);
+      console.error("Signup error:", error);
 
       res.status(500).json({
-        error: error.message
+        error: error.message || "Signup failed",
       });
-
     }
-
   });
 
-  // serve frontend
-  app.use(express.static("dist"));
+  // =========================
+  // SERVE FRONTEND
+  // =========================
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve("dist/index.html"));
+  const distPath = path.join(__dirname, "dist");
+
+  app.use(express.static(distPath));
+
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
   });
+
+  // =========================
+  // START SERVER
+  // =========================
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log("Server running on port", PORT);
+    console.log(`Server running on port ${PORT}`);
   });
-
 }
 
 startServer();
