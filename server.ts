@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import { secureAnalyzeHandler } from "./api/handler.ts";
 
 async function startServer() {
@@ -8,11 +9,7 @@ async function startServer() {
 
   app.use(express.json());
 
-  // test route
-  app.get("/", (req, res) => {
-    res.send("Server is running 🚀");
-  });
-
+  // API analyze
   app.post("/api/analyze", async (req, res) => {
     try {
 
@@ -41,6 +38,7 @@ async function startServer() {
     }
   });
 
+  // signup route
   app.post("/api/signup", async (req, res) => {
 
     try {
@@ -74,6 +72,13 @@ async function startServer() {
 
     }
 
+  });
+
+  // serve frontend
+  app.use(express.static("dist"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("dist/index.html"));
   });
 
   app.listen(PORT, "0.0.0.0", () => {
